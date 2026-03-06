@@ -474,14 +474,80 @@
       transform: translateY(0);
     }
 
+    /* HERO TWO-COLUMN LAYOUT */
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 5rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* PHOTO PLACEHOLDER */
+    .hero-photo {
+      position: relative;
+      width: 300px;
+      height: 380px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      flex-shrink: 0;
+      opacity: 0;
+      animation: fadeUp 0.8s forwards 1s;
+    }
+
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      top: 14px; right: -14px; bottom: -14px; left: 14px;
+      border: 1px solid rgba(201,168,76,0.1);
+      pointer-events: none;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* CV DOWNLOAD BUTTON */
+    .btn-cv {
+      padding: 0.9rem 2.5rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .btn-cv:hover { background: var(--gold); color: var(--black); }
+
+    /* STATS BAR WRAPPER */
+    .stats-bar-wrapper {
+      padding: 0 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1.5rem; }
       .nav-links { display: none; }
       section { padding: 5rem 1.5rem; }
-      .hero { padding: 7rem 1.5rem 4rem; }
+      .hero { padding: 7rem 1.5rem 5rem; min-height: auto; }
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-photo { width: 100%; max-width: 260px; height: 300px; }
+      .hero-cta { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .hero-scroll { left: 1.5rem; bottom: 1.5rem; }
+      .stats-bar-wrapper { padding: 0 1.5rem; }
       .achievement { grid-template-columns: 1fr; }
       .achievement-stats { text-align: left; }
+      .contact-section { padding: 5rem 1.5rem; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
       .stats-bar { flex-direction: column; }
       .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
@@ -503,19 +569,27 @@
 
   <!-- HERO -->
   <div class="hero">
-    <p class="hero-label">RPA & Agentic AI — Senior Strategist</p>
-    <h1 class="hero-title">
-      Building automation<br/>
-      <em>infrastructures</em><br/>
-      that last.
-    </h1>
-    <p class="hero-sub">
-      I help global organizations design, govern, and scale their automation landscape — from RPA foundations to Agentic AI.
-      I don't sell technology. I build operational models that deliver measurable value.
-    </p>
-    <div class="hero-cta">
-      <a href="#achievements" class="btn-primary">See My Track Record</a>
-      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <p class="hero-label">RPA & Agentic AI — Senior Strategist</p>
+        <h1 class="hero-title">
+          Building automation<br/>
+          <em>infrastructures</em><br/>
+          that last.
+        </h1>
+        <p class="hero-sub">
+          I help global organizations design, govern, and scale their automation landscape — from RPA foundations to Agentic AI.
+          I don't sell technology. I build operational models that deliver measurable value.
+        </p>
+        <div class="hero-cta">
+          <a href="#achievements" class="btn-primary">See My Track Record</a>
+          <a href="#contact" class="btn-secondary">Get in Touch</a>
+          <a href="./CV-Hermann-Biendou.pdf" download class="btn-cv">Download CV</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="./Hermann%20Pro.png" alt="Hermann Biendou — RPA & Agentic AI Senior Strategist"/>
+      </div>
     </div>
     <div class="hero-scroll">
       <div class="scroll-line"></div>
@@ -524,7 +598,7 @@
   </div>
 
   <!-- STATS BAR -->
-  <div style="padding: 0 4rem; max-width:1200px; margin:0 auto;" class="reveal">
+  <div class="stats-bar-wrapper reveal">
     <div class="stats-bar">
       <div class="stat-item">
         <div class="stat-big">900+</div>
@@ -642,7 +716,7 @@
     <a href="mailto:hermann.biendou@outlook.com" class="contact-email">hermann.biendou@outlook.com</a>
     <div class="social-links">
       <a href="https://www.linkedin.com/in/hermannbiendou/" target="_blank">LinkedIn</a>
-      <a href="#" target="_blank">Download CV</a>
+      <a href="./CV-Hermann-Biendou.pdf" download>Download CV</a>
     </div>
   </div>
 
@@ -652,9 +726,17 @@
     <span style="color:var(--border);">RPA & Agentic AI Strategist</span>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-        
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
